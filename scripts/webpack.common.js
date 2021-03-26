@@ -1,20 +1,34 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const WebpackBar = require('webpackbar');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const paths = require('./paths');
+const isDev = process.env.NODE_ENV === 'development';
+
+const getCssLoaders = (importLoaders) => [
+  isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+  {
+    loader: 'css-loader',
+    options: {
+      modules: false,
+      sourceMap: isDev,
+      importLoaders,
+    },
+  },
+  'postcss-loader'
+]
+
 
 module.exports = {
-  mode: 'development',
   entry: './src/index.tsx',
   output: {
     filename: '[name].[chunkhash:8].js',
-    path: path.resolve(__dirname, '../dist'),
+    path: paths.appBuild,
   },
+  // cache: {
+  //   // 使用持久化缓存
+  //   type: 'filesystem', // memory:缓存到内存；filesystem：缓存到node_moudules文件
+  // },
   plugins: [
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: 'public/index.html',
-    }),
-    new CleanWebpackPlugin(),
+    new WebpackBar()
   ],
   module: {
     rules: [
@@ -22,15 +36,29 @@ module.exports = {
         test: /\.(tsx?|js)$/,
         use: 'babel-loader',
         exclude: /node_modules/
+      },
+      {
+        test: /\.css$/,
+        use: getCssLoaders(1),
+      },
+      {
+        test: /\.less$/,
+        use: [
+          ...getCssLoaders(2),
+          {
+            loader: 'less-loader',
+            options: {
+              sourceMap: isDev,
+            }
+          }
+        ]
       }
     ],
   },
-  devServer: {
-    port: 8080,
-    hot: true,
-    host: '0.0.0.0',
-  },
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.json'],
+    alias: {
+      '@src': paths.appSrc
+    }
   },
 };
