@@ -14,10 +14,9 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:unicorn/recommended',
     'plugin:promise/recommended',
-    'plugin:@typescript-eslint/recommended',
     'prettier',
   ],
-  parser: '@typescript-eslint/parser',
+  parser: '',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -28,11 +27,11 @@ module.exports = {
   settings: {
     'import/resolver': {
       node: {
-        extensions: ['.tsx', '.ts', '.js', '.json'],
+        extensions: ['.jsx', '.js', '.json'],
       },
     },
   },
-  plugins: ['react', 'unicorn', 'promise', '@typescript-eslint'],
+  plugins: ['react', 'unicorn', 'promise', 'import'],
   rules: {
     'import/extensions': [
       ERROR,
@@ -46,6 +45,5 @@ module.exports = {
     ],
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'no-use-before-define': [0],
-    '@typescript-eslint/no-use-before-define': [1],
   },
 };

@@ -18,31 +18,38 @@ const getCssLoaders = (importLoaders) => [
 
 
 module.exports = {
-  entry: './src/index.tsx',
+  entry: './src/index.jsx',
   output: {
     filename: '[name].[chunkhash:8].js',
     path: paths.appBuild,
   },
-  // cache: {
-  //   // 使用持久化缓存
-  //   type: 'filesystem', // memory:缓存到内存；filesystem：缓存到node_moudules文件
-  // },
+  cache: {
+    // 使用持久化缓存
+    type: 'filesystem', // memory:缓存到内存；filesystem：缓存到node_moudules文件
+  },
   plugins: [
     new WebpackBar()
   ],
+  target: isDev ? "web" : "browserslist",
   module: {
     rules: [
       {
-        test: /\.(tsx?|js)$/,
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        type: 'asset'
+      },
+      {
+        test: /\.(jsx?|js)$/,
         use: 'babel-loader',
         exclude: /node_modules/
       },
       {
         test: /\.css$/,
         use: getCssLoaders(1),
+        exclude: /node_modules/,
       },
       {
         test: /\.less$/,
+        exclude: /node_modules/,
         use: [
           ...getCssLoaders(2),
           {
@@ -56,9 +63,9 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js', '.json'],
+    extensions: ['.jsx', '.ts', '.js', '.json'],
     alias: {
-      '@src': paths.appSrc
+      '@': paths.appSrc
     }
   },
 };
