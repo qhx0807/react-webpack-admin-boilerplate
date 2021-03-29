@@ -1,14 +1,13 @@
 const { merge } = require('webpack-merge');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const common = require('./webpack.common.js');
-const path = require('path');
 
 module.exports = merge(common, {
   mode: 'development',
+  devtool: 'inline-source-map',
   devServer: {
     historyApiFallback: true,
     port: 9000,
-    compress: true,
+    // compress: true,
     hot: true,
     stats: 'errors-only',
     clientLogLevel: 'silent',
@@ -18,11 +17,5 @@ module.exports = merge(common, {
       console.log('running at http://localhost:9000/');
     }
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: 'public/index.html',
-      inject: 'body',
-      hash: false,
-    }),
-  ]
+  plugins: []
 })
