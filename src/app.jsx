@@ -5,9 +5,11 @@ import './app.less';
 function App(properties) {
   const { name, age } = properties;
   return (
-    <div className="app" c>
+    <div className="app">
       <img src={aImg} alt="" />
-      <span>{`Helloooo! I am ${name}, ${age} years old boy`}</span>
+      <span>{`Helloooo1! I am aass ${name}, ${age} years aold boy`}</span>
+      <h1>wwddas</h1>
+      <pre>console.log(a)</pre>
     </div>
   );
 }

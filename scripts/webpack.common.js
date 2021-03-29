@@ -124,6 +124,7 @@ module.exports = {
     },
   },
   resolve: {
+    modules: [paths.appNodeModules],
     extensions: ['.jsx', '.js', '.json'],
     alias: {
       moment$: 'moment/moment.js',

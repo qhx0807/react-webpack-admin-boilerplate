@@ -29,6 +29,9 @@ module.exports = {
       node: {
         extensions: ['.jsx', '.js', '.json'],
       },
+      webpack: {
+        config: './scripts/webpack.common.js',
+      },
     },
   },
   plugins: ['react', 'unicorn', 'promise', 'import'],
@@ -37,8 +40,7 @@ module.exports = {
       ERROR,
       'ignorePackages',
       {
-        ts: 'never',
-        tsx: 'never',
+        jsx: 'never',
         json: 'never',
         js: 'never',
       },
